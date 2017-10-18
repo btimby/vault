@@ -68,6 +68,8 @@ if curl -s "${VAULT_URI}/_ping"; then
 
   if [[ "$DISABLE_PASSWORD" != "" ]]; then
     ssh-keygen -p -P $DISABLE_PASSWORD -N "" -f ~/.ssh/$VAULT_SSH_KEY
+  elif [[ grep -L ENCRYPTED  ~/.ssh/$VAULT_SSH_KEY ]]; then
+    log "WARNING: SSH key is encrypted, used --disable-pwd option"
   fi
 
   # restore 'no_proxy' for executing the actual command
